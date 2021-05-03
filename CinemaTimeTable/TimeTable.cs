@@ -6,8 +6,21 @@ using System.Threading.Tasks;
 
 namespace CinemaTimeTable
 {
-    class TimeTable : Dictionary<string, Movie>
+    public class TimeTable
     {
-        
+        public List<Movie> Movies;
+
+        public Node Graph;
+        public TimeTable(List<Movie> movies)
+        {
+            Movies = movies;
+        }
+
+        public void CreateTimeTable()
+        {
+            Graph = new Node(6, 10, Movies);
+            Graph.CreateGraph();
+            Graph.WriteAllLeaves();
+        }
     }
 }

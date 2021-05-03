@@ -8,11 +8,20 @@ namespace CinemaTimeTable
 {
     public class CinemaHall
     {
-        public TimeSpan WorkDayDuration { get; set; }
+        public int WorkDayDuration { get; set; }
+        public List<Movie> Movies { get; set; }
+        public TimeTable TimeTable { get; set; }
 
-        public CinemaHall(TimeSpan workDayDuration)
+        public CinemaHall(int workDayDuration, List<Movie> movies)
         {
             WorkDayDuration = workDayDuration;
+            Movies = movies;
+        }
+
+        public void CreateTimeTable()
+        {
+            TimeTable timeTable = new TimeTable(Movies);
+            timeTable.CreateTimeTable();
         }
     }
 }
