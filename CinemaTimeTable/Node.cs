@@ -9,15 +9,15 @@ namespace CinemaTimeTable
     public class Node : ICloneable
     {
         public List<Movie> Movies { get; set; }
-        public int TimeLeft;
+        public TimeSpan TimeLeft;
 
         public Movie Movie;
-        public int Time;
+        public TimeSpan Time;
 
         public List<Node> AllPreviousMovies;
         public List<Node> NextNodes;
 
-        public Node(int timeLeft, int time, List<Movie> movies, List<Node> allPreviousMovies = null)
+        public Node(TimeSpan timeLeft, TimeSpan time, List<Movie> movies, List<Node> allPreviousMovies = null)
         {
             TimeLeft = timeLeft;
             Time = time;

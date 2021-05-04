@@ -20,8 +20,8 @@ namespace CinemaTimeTable
 
         public void CreateTimeTable()
         {
-            TimeTable timeTable = new TimeTable(Movies);
-            timeTable.CreateTimeTable();
+            TimeTable = new TimeTable(Movies);
+            TimeTable.CreateTimeTable();
         }
     }
 }

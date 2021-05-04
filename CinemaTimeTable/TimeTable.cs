@@ -12,7 +12,7 @@ namespace CinemaTimeTable
 
         public Node Graph;
 
-        public Dictionary<int, Movie> TimeTableElement;
+        public Dictionary<TimeSpan, Movie> TimeTableElements { get; set; }
         public TimeTable(List<Movie> movies)
         {
             Movies = movies;
@@ -20,20 +20,15 @@ namespace CinemaTimeTable
 
         public void CreateTimeTable()
         {
-            Graph = new Node(14, 10, Movies);
+            Graph = new Node(new TimeSpan(14,0,0), new TimeSpan(10, 0, 0), Movies);
             Graph.CreateGraph();
-            //Graph.WriteAllLeaves();
-            var v = Graph.SelectOptinalBranch();
-            Console.WriteLine("______________");
-            TimeTableElement = new Dictionary<int, Movie>();
-            foreach(Node s in v.AllPreviousMovies)
-            {
-                TimeTableElement.Add(s.Time, s.Movie);
-            }
+            
+            Node optimalBranch = Graph.SelectOptinalBranch();
 
-            foreach(var e in TimeTableElement)
+            TimeTableElements = new Dictionary<TimeSpan, Movie>();
+            foreach(Node s in optimalBranch.AllPreviousMovies)
             {
-                Console.WriteLine($"At {e.Key}:00 - {e.Value}");
+                TimeTableElements.Add(s.Time, s.Movie);
             }
         }
     }
