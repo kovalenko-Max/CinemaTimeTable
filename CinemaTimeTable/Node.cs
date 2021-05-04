@@ -75,9 +75,37 @@ namespace CinemaTimeTable
             }
         }
 
-        public override string ToString()
+        public OptimalBranch SelectOptinalBranch()
         {
-            return $"{Movie.Name}({Movie.Duration}) at {Time}";
+            if(Next.Count == 0)
+            {
+                return new OptimalBranch(TimeLeft, AllPreviousMovies);
+            }
+            else
+            {
+                List<OptimalBranch> optimalBranch = new List<OptimalBranch>();
+
+                foreach (Node n in Next)
+                {
+                    optimalBranch.Add(n.SelectOptinalBranch());
+                }
+
+                OptimalBranch min = optimalBranch[0];
+
+                foreach (OptimalBranch r in optimalBranch)
+                {
+                    if (min.TimeLeft > r.TimeLeft)
+                    {
+                        min = r;
+                    }
+                    else if ((min.TimeLeft == r.TimeLeft) && (min.AllPreviousMovies.Count > r.AllPreviousMovies.Count))
+                    {
+                        min = r;
+                    }
+                }
+
+                return min;
+            }
         }
 
         public object Clone()
@@ -90,6 +118,11 @@ namespace CinemaTimeTable
             }
 
             return cloneNode;
+        }
+        
+        public override string ToString()
+        {
+            return $"{Movie.Name}({Movie.Duration}) at {Time}";
         }
     }
 }

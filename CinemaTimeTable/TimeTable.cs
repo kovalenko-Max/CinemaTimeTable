@@ -11,6 +11,8 @@ namespace CinemaTimeTable
         public List<Movie> Movies;
 
         public Node Graph;
+
+        public Dictionary<int, Movie> TimeTableElement;
         public TimeTable(List<Movie> movies)
         {
             Movies = movies;
@@ -20,7 +22,12 @@ namespace CinemaTimeTable
         {
             Graph = new Node(6, 10, Movies);
             Graph.CreateGraph();
-            Graph.WriteAllLeaves();
+            //Graph.WriteAllLeaves();
+            var v = Graph.SelectOptinalBranch();
+            foreach(var s in v.AllPreviousMovies)
+            {
+                Console.WriteLine(s + " ");
+            }
         }
     }
 }
