@@ -20,13 +20,20 @@ namespace CinemaTimeTable
 
         public void CreateTimeTable()
         {
-            Graph = new Node(6, 10, Movies);
+            Graph = new Node(14, 10, Movies);
             Graph.CreateGraph();
             //Graph.WriteAllLeaves();
             var v = Graph.SelectOptinalBranch();
-            foreach(var s in v.AllPreviousMovies)
+            Console.WriteLine("______________");
+            TimeTableElement = new Dictionary<int, Movie>();
+            foreach(Node s in v.AllPreviousMovies)
             {
-                Console.WriteLine(s + " ");
+                TimeTableElement.Add(s.Time, s.Movie);
+            }
+
+            foreach(var e in TimeTableElement)
+            {
+                Console.WriteLine($"At {e.Key}:00 - {e.Value}");
             }
         }
     }

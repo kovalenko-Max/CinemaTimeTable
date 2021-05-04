@@ -15,14 +15,14 @@ namespace CinemaTimeTable
         public int Time;
 
         public List<Node> AllPreviousMovies;
-        public List<Node> Next;
+        public List<Node> NextNodes;
 
         public Node(int timeLeft, int time, List<Movie> movies, List<Node> allPreviousMovies = null)
         {
             TimeLeft = timeLeft;
             Time = time;
             Movies = movies;
-            Next = new List<Node>();
+            NextNodes = new List<Node>();
 
             if (allPreviousMovies is null)
             {
@@ -45,8 +45,10 @@ namespace CinemaTimeTable
                     Node previousNode = (Node)this.Clone();
                     newAllPreviousMovies.Add(previousNode);
 
-                    Node nextNode = new Node(TimeLeft - movie.Duration, Time + movie.Duration, Movies, newAllPreviousMovies);
-                    Next.Add(nextNode);
+                    List<Movie> newMoviesList = new List<Movie>(Movies);
+                    newMoviesList.Remove(movie);
+                    Node nextNode = new Node(TimeLeft - movie.Duration, Time + movie.Duration, newMoviesList, newAllPreviousMovies);
+                    NextNodes.Add(nextNode);
                     nextNode.CreateGraph();
                 }
             }
@@ -54,7 +56,7 @@ namespace CinemaTimeTable
 
         public void WriteAllLeaves()
         {
-            if (Next.Count == 0)
+            if (NextNodes.Count == 0)
             {
                 foreach (Node currentMovie in AllPreviousMovies)
                 {
@@ -68,31 +70,31 @@ namespace CinemaTimeTable
             }
             else
             {
-                foreach (Node n in Next)
+                foreach (Node n in NextNodes)
                 {
                     n.WriteAllLeaves();
                 }
             }
         }
 
-        public OptimalBranch SelectOptinalBranch()
+        public Node SelectOptinalBranch()
         {
-            if(Next.Count == 0)
+            if(NextNodes.Count == 0)
             {
-                return new OptimalBranch(TimeLeft, AllPreviousMovies);
+                return (Node)this.Clone();
             }
             else
             {
-                List<OptimalBranch> optimalBranch = new List<OptimalBranch>();
+                List<Node> branches = new List<Node>();
 
-                foreach (Node n in Next)
+                foreach (Node node in NextNodes)
                 {
-                    optimalBranch.Add(n.SelectOptinalBranch());
+                    branches.Add(node.SelectOptinalBranch());
                 }
 
-                OptimalBranch min = optimalBranch[0];
+                Node min = branches[0];
 
-                foreach (OptimalBranch r in optimalBranch)
+                foreach (Node r in branches)
                 {
                     if (min.TimeLeft > r.TimeLeft)
                     {

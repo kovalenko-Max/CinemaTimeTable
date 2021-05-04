@@ -11,10 +11,13 @@ namespace CinemaTimeTable
 
             List<Movie> movies = new List<Movie>();
             movies.Add(new Movie("First", 2));
-            //movies.Add(new Movie("Second", 2));
-            //movies.Add(new Movie("Third", 1));
+            movies.Add(new Movie("Second", 2));
+            movies.Add(new Movie("Third", 1));
             movies.Add(new Movie("Fourth", 3));
-            movies.Add(new Movie("Fifth", 4));
+            movies.Add(new Movie("Sixth", 4));
+            movies.Add(new Movie("Seventh", 5));
+            movies.Add(new Movie("Enghth", 2));
+            movies.Add(new Movie("Ninth", 1));
 
             List<CinemaHall> cinemaHalls = new List<CinemaHall>();
             cinemaHalls.Add(new CinemaHall(workTimeDuration, movies));
